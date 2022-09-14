@@ -24,23 +24,14 @@ func (l *Logger) Println(v ...any) {
 	l.wg.Add(1)
 	go func() {
 		defer l.wg.Done()
-		// now := time.Now()
-		// year, month, day := now.Date()
-		// formattedMonth := itoa(int(month))
-		// formattedDay := itoa(day)
-		// hours, minutes, seconds := now.Clock()
-		// formattedHours := itoa(hours)
-		// formattedMinutes := itoa(minutes)
-		// formattedSeconds := itoa(seconds)
-		// date := fmt.Sprintf("%d/%s/%s", year, formattedMonth, formattedDay)
-		// clock := fmt.Sprintf("%s:%s:%s", formattedHours, formattedMinutes, formattedSeconds)
-		// fmt.Printf("%s %s %s\n", date, clock, fmt.Sprint(v...))
+		header := formatHeaderOutput(time.Now())
+		fmt.Printf("%s %s\n", header, fmt.Sprint(v...))
 	}()
 	l.wg.Wait()
 }
 
 func formatHeaderOutput(t time.Time) string {
-	formatted := ""
+	header := ""
 	year, month, day := t.Date()
 	formattedMonth := itoa(int(month))
 	formattedDay := itoa(day)
@@ -50,9 +41,8 @@ func formatHeaderOutput(t time.Time) string {
 	formattedSeconds := itoa(seconds)
 	date := fmt.Sprintf("%d/%s/%s", year, formattedMonth, formattedDay)
 	clock := fmt.Sprintf("%s:%s:%s", formattedHours, formattedMinutes, formattedSeconds)
-	fmt.Printf("%s %s %s\n", date, clock, fmt.Sprint(v...))
-	//TODO: Дописать логику форматирования хэдера
-	return formatted
+	header = fmt.Sprintf("%s %s", date, clock)
+	return header
 }
 
 func itoa(value int) string {
