@@ -1,11 +1,10 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"sync"
-	"time"
 
 	"github.com/kapralovs/async-logger/internal/alog"
 )
@@ -19,14 +18,11 @@ func main() {
 		wg.Add(1)
 		go func(threadNum int) {
 			defer wg.Done()
-			fmt.Println("Do some work BEFORE logs")
 			for j := 0; j < numOfLogs; j++ {
-				asyncLogger.Println(time.Now(), " - Thread: ", threadNum, ",Log: ", j+1)
-				fmt.Println("Do some work RIGHT AFTER log")
+				asyncLogger.Println("Thread: ", threadNum, ",Log: ", j+1)
 			}
-			fmt.Println("Do some work AFTER logs")
 		}(i + 1)
 	}
 	wg.Wait()
-	asyncLogger.Println("Program finished")
+	log.Println("Program finished")
 }
