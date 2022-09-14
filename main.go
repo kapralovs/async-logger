@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/kapralovs/async-logger/internal/alog"
+	"github.com/kapralovs/alog_test/alog"
 )
 
 func main() {
